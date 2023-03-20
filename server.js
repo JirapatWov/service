@@ -3,7 +3,7 @@
 const express = require('express');
 const cors = require('cors');
 const mysql = require('mysql');
-const multer = require('multer');
+// const multer = require('multer');
 
 const app = express();
 
@@ -81,38 +81,38 @@ app.get('/iscurrent/:id', function(req, res) {
 });
 
 // Create a Multer storage engine to handle file uploads
-const storage = multer.diskStorage({
-  destination: (req, file, cb) => {
-    if (req.path === '/api/edit-homepage') {
-      cb(null, '../../img/home/selected');
-    } else {
-      cb(null, '../../img/projects/');
-    }
-  },
-  filename: (req, file, cb) => {
-    const timestamp = Date.now();
-    cb(null, `${timestamp}-${file.originalname}`);
-  },
-});
-const upload = multer({ storage });
-const uploadToCurrent = (id, position) => {
-  connection.query(
-    'INSERT INTO current (project_id, position) VALUES (?, ?)',
-    [id, position],
-    (error, result) => {
-      if (error) {
-        console.error('Error inserting data:', error);
-        return false
-      } else {
-        console.log('Data inserted successfully');
-        return true
-      }
-    }
-  );
-} 
+// const storage = multer.diskStorage({
+//   destination: (req, file, cb) => {
+//     if (req.path === '/api/edit-homepage') {
+//       cb(null, '../../img/home/selected');
+//     } else {
+//       cb(null, '../../img/projects/');
+//     }
+//   },
+//   filename: (req, file, cb) => {
+//     const timestamp = Date.now();
+//     cb(null, `${timestamp}-${file.originalname}`);
+//   },
+// });
+// const upload = multer({ storage });
+// const uploadToCurrent = (id, position) => {
+//   connection.query(
+//     'INSERT INTO current (project_id, position) VALUES (?, ?)',
+//     [id, position],
+//     (error, result) => {
+//       if (error) {
+//         console.error('Error inserting data:', error);
+//         return false
+//       } else {
+//         console.log('Data inserted successfully');
+//         return true
+//       }
+//     }
+//   );
+// } 
 
 // Handle form submissions
-app.post('/api/submit-form', upload.single('image'), (req, res) => {
+app.post('/api/submit-form', (req, res) => {
   const { title, cat, current } = req.body;
   const image = req.file.filename;
   const position = 1;
@@ -227,7 +227,7 @@ app.get('/deleteproject/:id', function(req, res) {
 
 
 // Handle form edit form
-app.post('/api/edit-form', upload.single('image'), (req, res) => {
+app.post('/api/edit-form', (req, res) => {
   const { id, title, cat, current, defaultCurrent } = req.body;
   let image = null;
   if (req.file) {
@@ -297,7 +297,7 @@ app.post('/api/edit-form', upload.single('image'), (req, res) => {
   }
 });
 
-app.post('/api/edit-homepage', upload.single('image'), (req, res) => {
+app.post('/api/edit-homepage', (req, res) => {
   const { id } = req.body;
   let image = null;
   if (req.file) {
