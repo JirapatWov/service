@@ -84,9 +84,9 @@ app.get('/iscurrent/:id', function(req, res) {
 const storage = multer.diskStorage({
   destination: (req, file, cb) => {
     if (req.path === '/api/edit-homepage') {
-      cb(null, '../../img/home/selected');
+      cb(null, '../img/home/selected');
     } else {
-      cb(null, '../../img/projects/');
+      cb(null, '../img/projects/');
     }
   },
   filename: (req, file, cb) => {
