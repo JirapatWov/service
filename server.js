@@ -25,6 +25,10 @@ connection.connect(function(err) {
   console.log('Connected to MySQL!');
 });
 
+setInterval(function () {
+  connection.query('SELECT 1');
+}, 5000);
+
 // create an API endpoint to get data from MySQL
 app.get('/homepage', function(req, res) {
   connection.query('SELECT * FROM homepage', function(err, results, fields) {
