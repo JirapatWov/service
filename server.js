@@ -14,9 +14,9 @@ app.use(express.json());
 // configure MySQL connection
 const connection = mysql.createConnection({
   host: 'localhost',
-  user: 'secco_secco',
-  password: '123456789',
-  database: 'secco_secco'
+  user: 'secco',
+  password: 'Secco_1234',
+  database: 'secco'
 });
 
 // connect to MySQL
@@ -24,10 +24,6 @@ connection.connect(function(err) {
   if (err) throw err;
   console.log('Connected to MySQL!');
 });
-
-setInterval(function () {
-  connection.query('SELECT 1');
-}, 5000);
 
 // create an API endpoint to get data from MySQL
 app.get('/homepage', function(req, res) {
@@ -88,9 +84,9 @@ app.get('/iscurrent/:id', function(req, res) {
 const storage = multer.diskStorage({
   destination: (req, file, cb) => {
     if (req.path === '/api/edit-homepage') {
-      cb(null, '../img/home/selected');
+      cb(null, '../../img/home/selected');
     } else {
-      cb(null, '../img/projects/');
+      cb(null, '../../img/projects/');
     }
   },
   filename: (req, file, cb) => {
